@@ -11,7 +11,7 @@ export 'message.dart';
 /// Don't know why you should overwrite these settings but you can.
 class _FCMOptions {
   static const keepAlive = true;
-  final headers = <String, String>{};
+  // final headers = <String, String>{};
   static const host = 'fcm.googleapis.com';
   // static const method = 'POST';
   static const path = '/fcm/send';
@@ -20,17 +20,8 @@ class _FCMOptions {
 
 class FCM {
   /// FCM-Options: https://firebase.google.com/docs/cloud-messaging/server
-  FCM(String serverKey) {
-    final extraHeaders = <String, dynamic>{
-      'Authorization': 'key=${serverKey}',
-      if (_FCMOptions.keepAlive) 'Connection': 'keep-alive',
-      'Content-Type': 'application/json',
-      'Host': _FCMOptions.host,
-    };
-    extraHeaders.forEach(
-      (key, value) => _FCMOptions.headers.putIfAbsent(key, () => value),
-    );
-  }
+  FCM(this._serverKey);
+  final String _serverKey;
 
   /// Sends the [FCMMessage] and returns the 'message_id'
   /// https://firebase.google.com/docs/cloud-messaging/http-server-ref#table4
@@ -48,16 +39,22 @@ class FCM {
       title: title,
       to: to,
     );
-
     final Uri uri = Uri(
       host: _FCMOptions.host,
       path: _FCMOptions.path,
       port: _FCMOptions.port,
       scheme: 'https',
     );
+    final headers = <String, String>{
+      'Authorization': 'key=$_serverKey',
+      if (_FCMOptions.keepAlive)
+        'Connection': 'keep-alive',
+      'Content-Type': 'application/json',
+      // 'Host': _FCMOptions.host,
+    };
 
     final http.Response response =
-        await http.post(uri, headers: _FCMOptions.headers, body: '$message');
+        await http.post(uri, headers: headers, body: '$message');
 
     try {
       /// https://firebase.google.com/docs/cloud-messaging/http-server-ref#table4
