@@ -24,6 +24,7 @@ Future<int> main() async {
   final fcm = FCM(_serverKey);
   final messageID = await fcm.send(
     data: {'key': 'value'},
+    logging: true,
     text: 'Hello, world!',
     title: 'Message title',
     to: _token,

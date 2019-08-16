@@ -28,6 +28,7 @@ class FCM {
   Future<String> send({
     String collapseKey,
     Map<String, dynamic> data = const <String, dynamic>{},
+    bool logging = false,
     String text,
     String title,
     String to,
@@ -52,17 +53,15 @@ class FCM {
       'Content-Type': 'application/json',
       // 'Host': _FCMOptions.host,
     };
-    print('uri: $uri');
-    print('headers: $headers');
-    print('message: $message');
 
     final http.Response response =
         await http.post(uri, headers: headers, body: '$message');
 
-    print('statusCode: ${response.statusCode}, body: ${response.body}');
+    if (logging) print('Status code: ${response.statusCode}');
     try {
       /// https://firebase.google.com/docs/cloud-messaging/http-server-ref#table4
       final result = json.decode(response.body);
+      if (logging) print('Response: $result');
       if (response.statusCode == 200 &&
           int.parse(result['success'].toString()) == 1) {
         return result['results'].first['message_id'];
