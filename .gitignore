@@ -1,0 +1,8 @@
+.dart
+.packages
+.runtimeconfig.json
+.~lock*
+/output
+.dart_tool
+.build
+doc
