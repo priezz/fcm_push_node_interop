@@ -11,7 +11,7 @@ export 'message.dart';
 /// Don't know why you should overwrite these settings but you can.
 class _FCMOptions {
   static const keepAlive = true;
-  static const headers = <String, String>{};
+  final headers = <String, String>{};
   static const host = 'fcm.googleapis.com';
   // static const method = 'POST';
   static const path = '/fcm/send';
