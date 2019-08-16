@@ -52,10 +52,14 @@ class FCM {
       'Content-Type': 'application/json',
       // 'Host': _FCMOptions.host,
     };
+    print('uri: $uri');
+    print('headers: $headers');
+    print('message: $message');
 
     final http.Response response =
         await http.post(uri, headers: headers, body: '$message');
 
+    print('statusCode: ${response.statusCode}, body: ${response.body}');
     try {
       /// https://firebase.google.com/docs/cloud-messaging/http-server-ref#table4
       final result = json.decode(response.body);
