@@ -35,7 +35,7 @@ class FCM {
   }) async {
     final message = FCMMessage(
       collapseKey: collapseKey,
-      data: data,
+      data: {...data, 'click_action': 'FLUTTER_NOTIFICATION_CLICK'},
       text: text,
       title: title,
       to: to,
