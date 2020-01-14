@@ -21,9 +21,9 @@ class FCMMessage {
     json['to'] = to;
     if (_hasCollapseKey) json['collapse_key'] = collapseKey;
     if (_hasData) json['data'] = <String, dynamic>{};
-    data.forEach((key, value) => json['data'][key] = value);
+    data.forEach((key, dynamic value) => json['data'][key] = value);
     if (_hasTitle || _hasBody) {
-      json['notification'] = <String, dynamic>{};
+      json['notification'] = <String, dynamic>{'content_available': true};
       if (_hasTitle) json['notification']['title'] = title;
       if (_hasBody) json['notification']['body'] = text;
     }
